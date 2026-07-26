@@ -1,0 +1,13 @@
+{
+  "name": "essentials",
+  "description": "Martin's essential Claude Code plugin bundle.",
+  "author": {
+    "name": "Martin Gauthier"
+  },
+  "dependencies": [
+    {
+      "name": "mattpocock-skills",
+      "marketplace": "mattpocock"
+    }
+  ]
+}

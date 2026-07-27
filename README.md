@@ -1,27 +1,26 @@
-# Claude Code plugin bundle
+# Claude plugins
 
 Martin Gauthier's personal [Claude Code](https://docs.anthropic.com/en/docs/claude-code) plugin marketplace. It publishes four locally maintained plugins and an `essentials` bundle that installs them with selected third-party tools.
 
 ## Install
-
-The repository is private, so Git must be able to authenticate with GitHub.
 
 Register the third-party marketplaces used by `essentials`, add this marketplace, then install the bundle:
 
 ```bash
 claude plugin marketplace add mattpocock/skills
 claude plugin marketplace add DietrichGebert/ponytail
-claude plugin marketplace add gauthiermartin/claude-code-plugin-bundle
-claude plugin install essentials@claude-code-plugin-bundle
+claude plugin marketplace add anthropics/claude-plugins-official
+claude plugin marketplace add gauthiermartin/claude-plugins
+claude plugin install essentials@gauthiermartin
 ```
 
-Claude Code's official marketplace supplies the `playwright` dependency. From a local checkout, replace the third marketplace command with:
+From a local checkout, replace the bundle marketplace command with:
 
 ```bash
-claude plugin marketplace add .
+claude plugin marketplace add ./
 ```
 
-Install one local plugin without the aggregate bundle using `claude plugin install <name>@claude-code-plugin-bundle`.
+Install one local plugin without the aggregate bundle using `claude plugin install <name>@gauthiermartin`.
 
 ## Marketplace plugins
 
@@ -48,8 +47,8 @@ The third-party plugins are referenced as dependencies; their source is not copi
 ## Update
 
 ```bash
-claude plugin marketplace update claude-code-plugin-bundle
-claude plugin update essentials@claude-code-plugin-bundle
+claude plugin marketplace update gauthiermartin
+claude plugin update essentials@gauthiermartin
 ```
 
 ## Repository layout

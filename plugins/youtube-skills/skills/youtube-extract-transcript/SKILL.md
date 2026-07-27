@@ -1,6 +1,6 @@
 ---
-name: extract-transcript
-description: Use when the user wants to pull the transcript or spoken-word text out of a YouTube video and save it as a standalone markdown file, given a video URL. Pairs with summarize-transcript, which condenses the resulting file. For research topics, pass the YouTube URL directly to /obsidian-skills:research instead — it ingests transcripts itself.
+name: youtube-extract-transcript
+description: Use when the user wants to pull the transcript or spoken-word text out of a YouTube video and save it as a standalone markdown file, given a video URL. Pairs with youtube-summarize-transcript, which condenses the resulting file. For research topics, pass the YouTube URL directly to /obsidian-skills:obsidian-research instead — it ingests transcripts itself.
 ---
 
 1. **Get the URL.** Require a YouTube video URL from the user. If they gave an output path, use it; otherwise default to `~/Documents/Workspace/youtube-transcripts/` and create it with `mkdir -p` if missing.
@@ -13,7 +13,7 @@ description: Use when the user wants to pull the transcript or spoken-word text 
 
 5. **No captions at all?** Report to the user that this video has no caption track and stop. Do not fall back to audio transcription — out of scope for this skill.
 
-6. **Convert to prose.** Run `uv run "${CLAUDE_PLUGIN_ROOT}/skills/extract-transcript/vtt_to_text.py" <downloaded.vtt>` to strip cue timing/markup and dedupe the rolling-caption repetition into clean paragraphs.
+6. **Convert to prose.** Run `uv run "${CLAUDE_PLUGIN_ROOT}/skills/youtube-extract-transcript/vtt_to_text.py" <downloaded.vtt>` to strip cue timing/markup and dedupe the rolling-caption repetition into clean paragraphs.
 
 7. **Write the markdown file.** Frontmatter (`title`, `source_url`, `channel`, `upload_date`, `extracted_at` — today's date, via `date +%Y-%m-%d`) followed by the prose body. Filename: `<slug-of-title>-<video-id>.md`, saved to the resolved output directory.
 

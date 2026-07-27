@@ -1,6 +1,6 @@
 ---
-name: research-lint
-description: Health-check a research directory produced by /obsidian-skills:research. Runs seven checks — orphan sources, missing entity/concept hubs, missing comparison candidates, broken wikilinks, stale claims, contradictions, and open-question synthesis. Outputs a report; edits where safe (broken-link flags, open-question append, contradiction surfacing); flags-only otherwise. Always user-triggered, never automated. Trigger when the user says things like "lint my research", "health check my research", "check the wiki", "audit my research dir", "what's wrong with my wiki", "find orphans / contradictions / stale claims".
+name: obsidian-research-lint
+description: Health-check a research directory produced by /obsidian-skills:obsidian-research. Runs seven checks — orphan sources, missing entity/concept hubs, missing comparison candidates, broken wikilinks, stale claims, contradictions, and open-question synthesis. Outputs a report; edits where safe (broken-link flags, open-question append, contradiction surfacing); flags-only otherwise. Always user-triggered, never automated. Trigger when the user says things like "lint my research", "health check my research", "check the wiki", "audit my research dir", "what's wrong with my wiki", "find orphans / contradictions / stale claims".
 ---
 
 # Research Lint
@@ -18,7 +18,7 @@ This skill answers: "what's broken or thin in this wiki, and what should I resea
 
 ## Step 1 — Locate the research dir
 
-Same logic as `/obsidian-skills:research` (query mode):
+Same logic as `/obsidian-skills:obsidian-research` (query mode):
 1. If the user provides a path, use it.
 2. Otherwise scan `$RESEARCH_ROOT/` for dirs containing `index.yaml` and ask if multiple exist.
 3. If only one exists, use it.
@@ -46,7 +46,7 @@ The four cheap checks always run. The three LLM checks run by default but can be
 Run all four mechanical scripts in parallel and collect their JSON outputs. They all read-only; safe to run any time.
 
 ```bash
-SKILL_DIR="${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/research-lint"
+SKILL_DIR="${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/obsidian-research-lint"
 RD="<research_dir>"
 
 uv run --script "$SKILL_DIR/scripts/lint_orphans.py" --research-dir "$RD" > "$RD/lint-orphans.json" &
@@ -81,8 +81,8 @@ Some checks generate *additive* edits the lint pass should apply automatically. 
 | Check | Auto-apply | Notes |
 |---|---|---|
 | orphans | NO | flag only — user decides whether to delete the source or add a wiki citation |
-| missing-hubs | NO | flag — user can /obsidian-skills:research it or accept the absence |
-| missing-comparisons | NO | flag — user can `/research-render comparison <a> <b>` if they want |
+| missing-hubs | NO | flag — user can /obsidian-skills:obsidian-research it or accept the absence |
+| missing-comparisons | NO | flag — user can `/obsidian-research-render comparison <a> <b>` if they want |
 | broken-links | NO | flag — wiki page may be missing because not yet promoted, or because the link is genuinely wrong |
 | stale-claims | NO | flag — needs human judgment |
 | contradictions | YES | append to `wiki/contradictions.md` (the page is meant to grow) |
@@ -95,7 +95,7 @@ After any auto-apply edits land, regenerate the index:
 PRIOR_CREATED=$(grep '^created:' "<research_dir>/index.yaml" | awk -F"'" '{print $2}')
 # Re-run build_index_yaml.py is unnecessary because no source data changed,
 # but build_index_md.py must regenerate to reflect new pages in the index.
-uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/research/scripts/build_index_md.py --research-dir "<research_dir>"
+uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/obsidian-research/scripts/build_index_md.py --research-dir "<research_dir>"
 ```
 
 ## Step 6 — Append to log.md
@@ -147,8 +147,8 @@ Run at: <ISO-8601>
 
 ### Next steps
 - For each orphan: decide delete vs. add wiki citation
-- For missing hubs: run /obsidian-skills:research with the concept name, OR accept the absence
-- For missing comparisons: run /research-render comparison <a> <b>
+- For missing hubs: run /obsidian-skills:obsidian-research with the concept name, OR accept the absence
+- For missing comparisons: run /obsidian-research-render comparison <a> <b>
 - For broken links: edit the source file, OR remove the reference
 ```
 

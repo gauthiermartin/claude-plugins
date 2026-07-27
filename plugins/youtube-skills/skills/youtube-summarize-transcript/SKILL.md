@@ -1,6 +1,6 @@
 ---
-name: summarize-transcript
-description: Use when the user wants to summarize a YouTube transcript markdown file, such as one produced by extract-transcript.
+name: youtube-summarize-transcript
+description: Use when the user wants to summarize a YouTube transcript markdown file, such as one produced by youtube-extract-transcript.
 ---
 
 1. **Get the transcript file.** Require a path to an existing transcript markdown file. If it doesn't exist, stop and ask the user for a valid path — don't guess one.

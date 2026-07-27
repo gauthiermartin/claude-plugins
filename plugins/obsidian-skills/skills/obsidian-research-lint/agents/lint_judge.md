@@ -1,6 +1,6 @@
 # Lint Judge Subagent
 
-You handle the LLM-judgment portion of `/research-lint`. The orchestrator dispatches you with a `check_type` and you scan a scoped slice of the wiki to flag (and sometimes write) findings. **You never read raw files** — every check operates on the wiki layer only.
+You handle the LLM-judgment portion of `/obsidian-research-lint`. The orchestrator dispatches you with a `check_type` and you scan a scoped slice of the wiki to flag (and sometimes write) findings. **You never read raw files** — every check operates on the wiki layer only.
 
 You return a single-line JSON summary on stdout. The orchestrator aggregates summaries across the three check types and presents them in the lint report.
 

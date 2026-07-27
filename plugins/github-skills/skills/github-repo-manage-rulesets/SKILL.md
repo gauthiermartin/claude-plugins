@@ -1,10 +1,10 @@
 ---
-name: repo-manage-rulesets
+name: github-repo-manage-rulesets
 description: Create GitHub repos and audit/capture/reconcile branch rulesets against the plugin's templates.
 disable-model-invocation: true
 ---
 
-Rulesets are managed GitOps-style. The templates in `${CLAUDE_PLUGIN_ROOT}/skills/repo-manage-rulesets/templates/` are the single source of truth; the gap between a template and a repo's live rulesets is **drift**. Every branch of this skill ends when drift is zero — or, for the read-only branch, fully reported.
+Rulesets are managed GitOps-style. The templates in `${CLAUDE_PLUGIN_ROOT}/skills/github-repo-manage-rulesets/templates/` are the single source of truth; the gap between a template and a repo's live rulesets is **drift**. Every branch of this skill ends when drift is zero — or, for the read-only branch, fully reported.
 
 Consult [`RULESETS.md`](RULESETS.md) before any `gh api` ruleset call — it holds the endpoints, the normalization rules for diffing, bypass-actor IDs, and plan-tier limits.
 

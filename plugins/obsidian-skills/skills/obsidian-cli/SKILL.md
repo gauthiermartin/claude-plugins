@@ -25,7 +25,7 @@ On Windows, the executable is commonly:
 ```
 
 If `obsidian` is not on PATH but that executable works, either call it by full path or set
-`OBSIDIAN_CLI` to that path. `/obsidian-skills:research` will also try this Windows default path during
+`OBSIDIAN_CLI` to that path. `/obsidian-skills:obsidian-research` will also try this Windows default path during
 preflight.
 
 ## Command reference

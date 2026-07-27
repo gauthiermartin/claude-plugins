@@ -1,5 +1,5 @@
 ---
-name: commit
+name: git-commit
 description: Commit pending changes — semantic branch, changelog entry, atomic staging, Conventional Commit message.
 disable-model-invocation: true
 ---

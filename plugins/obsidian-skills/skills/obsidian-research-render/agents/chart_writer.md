@@ -53,7 +53,7 @@ def build_data():
     """Return (labels, values) or whatever shape the chart needs.
 
     Data is hard-coded from the wiki page contents at render time. If the wiki
-    changes, re-run /research-render to regenerate.
+    changes, re-run /obsidian-research-render to regenerate.
     """
     # ...
     return labels, values
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     main()
 ```
 
-5. Hard-code the data inside `build_data()`. The wiki snapshot you read is now embedded in the script — that's the *point*: the PNG is reproducible from this script alone, even if the wiki changes later. If the user wants a re-render against fresh data, they re-run `/research-render`.
+5. Hard-code the data inside `build_data()`. The wiki snapshot you read is now embedded in the script — that's the *point*: the PNG is reproducible from this script alone, even if the wiki changes later. If the user wants a re-render against fresh data, they re-run `/obsidian-research-render`.
 
 ## Idempotency
 

@@ -1,5 +1,5 @@
 ---
-name: repo-report-issue
+name: github-repo-report-issue
 description: Report a bug, vulnerability, or feature request to an external open-source repo the right way.
 disable-model-invocation: true
 ---

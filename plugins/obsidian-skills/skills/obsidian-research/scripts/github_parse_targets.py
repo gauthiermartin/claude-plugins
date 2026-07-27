@@ -1,6 +1,6 @@
 """Parse a blob of markdown text for GitHub file references and group them by module.
 
-Used by `/research` when a GitHub repo URL is provided as a seed. Scans the
+Used by `/obsidian-research` when a GitHub repo URL is provided as a seed. Scans the
 brain dump (and any linked markdown files) for file references against a specific
 repo, and groups them by parent directory (the "module").
 

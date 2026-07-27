@@ -74,6 +74,6 @@ claude plugin validate .
 
 ## Attribution
 
-`obsidian-skills` includes work derived from [iusztinpaul/ai-research-os-workshop](https://github.com/iusztinpaul/ai-research-os-workshop). Its upstream MIT notice is retained in `plugins/obsidian-skills/LICENSE-upstream` and `plugins/obsidian-skills/skills/research/LICENSE-upstream`.
+`obsidian-skills` includes work derived from [iusztinpaul/ai-research-os-workshop](https://github.com/iusztinpaul/ai-research-os-workshop). Its upstream MIT notice is retained in `plugins/obsidian-skills/LICENSE-upstream` and `plugins/obsidian-skills/skills/obsidian-research/LICENSE-upstream`.
 
 Imported changelogs retain links to their original commits in `gauthiermartin/claude-marketplace`; those links document history and are not installation instructions.

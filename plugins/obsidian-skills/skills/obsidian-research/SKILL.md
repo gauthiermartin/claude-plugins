@@ -1,5 +1,5 @@
 ---
-name: research
+name: obsidian-research
 description: Build, extend, AND query a persistent LLM-maintained research wiki stored in the exocortex vault under 03-Resources/Research/. Routes between four modes - query (fast read-only answer from existing wiki), append (ingest the sources the user provided, no discovery), deep (explicit discovery/deep research at a fast/light/deep depth preset), and init (create a new research topic). Ingests from your knowledge sources (Obsidian vault + GitHub repos + YouTube videos + web seeds + user-dropped PDFs) and maintains a wiki layer (per-source pages, entities, concepts, comparisons, overview, synthesis, open questions, contradictions). Use for any research interaction - first-time research on a topic, "what do I have on X", "load my research on Y", "add this PDF to my research", "deep dive on Z", "pull together my notes on Y", "extend my research with this file". Trigger on the phrases above plus "search my research", "use my research", "find sources about X". Not for one-off questions or single-link lookups where no persistent research output is wanted.
 ---
 
@@ -246,7 +246,7 @@ If the user explicitly flagged a follow-up they want investigated next, ALSO app
 After writing both files (knowledge doc + slim question page), regenerate `index.md` (the new pages change `total_wiki_pages`):
 
 ```bash
-uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/research/scripts/build_index_md.py --research-dir "<research_dir>"
+uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/obsidian-research/scripts/build_index_md.py --research-dir "<research_dir>"
 ```
 
 ### Q.6 — Append to log.md
@@ -404,7 +404,7 @@ For every unique `https://github.com/<owner>/<repo>[...]` URL in the brain dump:
 
 1. **Parse targets** — run the parser over the brain dump AND any markdown files the user referenced (e.g., an outline.md). The parser extracts repo-relative file paths + line ranges and groups them by parent directory (one "module" per dir):
    ```bash
-   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/research/scripts/github_parse_targets.py \
+   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/obsidian-research/scripts/github_parse_targets.py \
      --repo "<repo_url>" \
      --text "<brain_dump_text>" \
      --file "<linked_markdown_file_1>" \
@@ -415,7 +415,7 @@ For every unique `https://github.com/<owner>/<repo>[...]` URL in the brain dump:
 
 2. **Shallow-clone** the repo into the cache. Pass `--research-dir` so the cache lands as a sibling of the research dir (its parent), not under working memory:
    ```bash
-   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/research/scripts/github_clone.py \
+   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/obsidian-research/scripts/github_clone.py \
      --repo "<repo_url>" \
      --research-dir "<research_dir>"
    ```
@@ -444,7 +444,7 @@ For every unique `https://github.com/<owner>/<repo>[...]` URL in the brain dump:
    - `github_repo_url: "https://github.com/<owner>/<repo>"`
    - `github_commit_sha: <commit_sha>`
    - `github_branch: <branch>`
-   - `github_files`: **union** of every file path referenced across all modules (from the parser output) — used by `/research-distill` for matching, not for indexing individual docs. Empty list in global mode.
+   - `github_files`: **union** of every file path referenced across all modules (from the parser output) — used by `/obsidian-research-distill` for matching, not for indexing individual docs. Empty list in global mode.
    - `authors: ["<owner>"]` (augment from README if a clear author is declared)
    - `publication: "GitHub"`
    - `staged_spec_path`: absolute path to the staged `ARCHITECTURE.md` (builder copies from here)
@@ -566,7 +566,7 @@ After each round completes — **all steps delegate to bash/scripts/subagents so
 
 1. **Deduplicate** the round's subagent outputs via script:
    ```bash
-   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/research/scripts/dedup_findings.py \
+   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/obsidian-research/scripts/dedup_findings.py \
      --inputs <research_dir>/round-N-query-*.json \
      --output <research_dir>/round-N-deduped.json
    ```
@@ -600,7 +600,7 @@ element is computed. It is a **single non-LLM script call** — nothing here ent
    output as `{"results": [...]}` and derives a numeric `relevance_score` from each finding's
    `relevance` tag (`high → 0.8`, `medium → 0.5`, else `0.5`):
    ```bash
-   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/research/scripts/dedup_findings.py \
+   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/obsidian-research/scripts/dedup_findings.py \
      --inputs <research_dir>/round-*-deduped.json \
      --as-results \
      --output <research_dir>/discovery-results.json
@@ -636,7 +636,7 @@ The Builder Subagent copies / fetches / pipes raw source content onto disk under
    - `seeds_json`: `<research_dir>/seeds.json` (from Step 1)
    - `research_dir`: the path from step 1 above (final files go here AND scratch JSONs land here too — they're cleaned up in Step 7)
    - `topic`, `input_summary`, `rounds_completed` from Step 1 / Step 2
-   - `skill_dir`: `${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/research` (absolute path)
+   - `skill_dir`: `${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/obsidian-research` (absolute path)
    - `mode: "raw_only"` — explicitly tells the builder to skip `index.yaml` emission
 
    In discovery modes, if you already started the **seed-only** builder in Step 5, wait for it to finish before launching the full builder - the full run is idempotent. In seed-only modes, launch the builder once with empty discovery results and the complete `seeds.json`.
@@ -655,7 +655,7 @@ For each entry in `raw_files`, run the asset pipeline. **All bash; nothing here 
 
 1. **PDFs** — for any source where `origin == "pdf"` (user-dropped) or where the original is a `.pdf` URL, the Builder will have already invoked `extract_pdf.py` to extract markdown + images and preserve the original at `raw/assets/<slug>/original.pdf`. If somehow not done, run it now:
    ```bash
-   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/research/scripts/extract_pdf.py \
+   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/obsidian-research/scripts/extract_pdf.py \
      --pdf "<original_pdf_path>" \
      --output-md "<research_dir>/raw/<slug>.md" \
      --assets-dir "<research_dir>/raw/assets/<slug>"
@@ -663,7 +663,7 @@ For each entry in `raw_files`, run the asset pipeline. **All bash; nothing here 
 
 2. **Images** — for every successful raw markdown file, download referenced images to local assets and rewrite refs:
    ```bash
-   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/research/scripts/download_assets.py \
+   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/obsidian-research/scripts/download_assets.py \
      --markdown "<research_dir>/raw/<slug>.md" \
      --assets-dir "<research_dir>/raw/assets/<slug>"
    ```
@@ -794,7 +794,7 @@ Now that the wiki layer exists, build the canonical index. **Two scripts, in ord
      PRIOR_INDEX="<research_dir>/.prior-index.yaml"
      cp "<research_dir>/index.yaml" "$PRIOR_INDEX"
    fi
-   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/research/scripts/build_index_yaml.py \
+   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/obsidian-research/scripts/build_index_yaml.py \
      --results "<research_dir>/discovery-final.json" \
      --seeds "<research_dir>/seeds-augmented.json" \
      --research-dir "<research_dir>" \
@@ -816,7 +816,7 @@ Now that the wiki layer exists, build the canonical index. **Two scripts, in ord
 
 3. **Run `build_index_md.py`** to regenerate the Obsidian-readable view:
    ```bash
-   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/research/scripts/build_index_md.py \
+   uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/obsidian-research/scripts/build_index_md.py \
      --research-dir "<research_dir>"
    ```
    This is byte-stable: identical inputs → byte-identical output. Always the last write before the log entry.
@@ -875,8 +875,8 @@ Tell the user:
 - **How to use it**:
   - For a quick view: open `index.md` in Obsidian (Obsidian-readable navigation)
   - For deep reading: open `wiki/synthesis.md` (the thesis) and `wiki/overview.md` (the catalog)
-  - For programmatic access: pass `index.yaml` to `/obsidian-skills:research` (query mode), which handles progressive disclosure
-- **Next steps suggestion**: "Run `/research-lint` to health-check the wiki, or `/research-render marp <topic>` to export a slide deck."
+  - For programmatic access: pass `index.yaml` to `/obsidian-skills:obsidian-research` (query mode), which handles progressive disclosure
+- **Next steps suggestion**: "Run `/obsidian-research-lint` to health-check the wiki, or `/obsidian-research-render marp <topic>` to export a slide deck."
 
 ## Important notes
 

@@ -1,6 +1,6 @@
 ---
-name: research-distill
-description: Distill a research directory (produced by /obsidian-skills:research) into a single compact research.md containing a guideline-relative distillation of only the sources that were actually used in a piece of content. Use this skill whenever the user wants to extract used references from research, create a research appendix for an article, distill research into what was actually cited, or produce a portable reference file from a research directory. Trigger when the user says things like "distill my research", "extract used sources", "which research did I actually use", "create research.md", "compile references from research", or after finishing an article that used a research directory. Not for building or querying research — that is /obsidian-skills:research.
+name: obsidian-research-distill
+description: Distill a research directory (produced by /obsidian-skills:obsidian-research) into a single compact research.md containing a guideline-relative distillation of only the sources that were actually used in a piece of content. Use this skill whenever the user wants to extract used references from research, create a research appendix for an article, distill research into what was actually cited, or produce a portable reference file from a research directory. Trigger when the user says things like "distill my research", "extract used sources", "which research did I actually use", "create research.md", "compile references from research", or after finishing an article that used a research directory. Not for building or querying research — that is /obsidian-skills:obsidian-research.
 ---
 
 # Research Distill
@@ -12,7 +12,7 @@ All research topic dirs live under the exocortex vault:
 `$RESEARCH_ROOT/<topic-slug>/` (no `research-` prefix on the dir name). To locate existing
 topics, scan `"$RESEARCH_ROOT"/*/index.yaml`.
 
-You take a research directory (produced by `/obsidian-skills:research`) and a set of content files the user is working on, and produce a single `research.md` containing **only the sources that were actually used** in that content, distilled to just the claims, quotes, and nuances the content actually leans on. Every source keeps its full metadata + URI envelope so the writer agent can drill back to the wiki source page or raw file when it needs more depth.
+You take a research directory (produced by `/obsidian-skills:obsidian-research`) and a set of content files the user is working on, and produce a single `research.md` containing **only the sources that were actually used** in that content, distilled to just the claims, quotes, and nuances the content actually leans on. Every source keeps its full metadata + URI envelope so the writer agent can drill back to the wiki source page or raw file when it needs more depth.
 
 This is the **audit/export side** of the research system — it answers "which sources from my research actually made it into the final content, and what specifically from each one?" The output is a working appendix sized for a writer agent's context window, not a verbatim mirror of the research directory.
 
@@ -30,7 +30,7 @@ These are the files the user is actively working on — article guidelines, draf
 Read all content files and concatenate their text into a single content corpus for matching.
 
 ### The research directory
-Locate the research directory using the same logic as `/obsidian-skills:research`:
+Locate the research directory using the same logic as `/obsidian-skills:obsidian-research`:
 1. If the user provides a path, use it
 2. Look for a dir containing `index.yaml` in the content's parent directory
 3. Look in `$RESEARCH_ROOT/` (the default research root — see the config block above) for dirs containing `index.yaml`
@@ -177,7 +177,7 @@ Create `research.md` in the same directory as the content files. The file contai
 
    #### Missing layers
 
-   If `uri_source_page`, `uri_highlights`, and `uri_full` are all `null` or missing on disk (rare — fetch failure during `/obsidian-skills:research`): emit only the metadata block, set the body to a single line under `### Relevant Claims` noting "Source body unavailable; see `<match_reason>` for citation context", and explain in `<match_reason>` which layers were missing.
+   If `uri_source_page`, `uri_highlights`, and `uri_full` are all `null` or missing on disk (rare — fetch failure during `/obsidian-skills:obsidian-research`): emit only the metadata block, set the body to a single line under `### Relevant Claims` noting "Source body unavailable; see `<match_reason>` for citation context", and explain in `<match_reason>` which layers were missing.
 
 5. **Separator**: Use `---` between each `<details>` block for readability.
 

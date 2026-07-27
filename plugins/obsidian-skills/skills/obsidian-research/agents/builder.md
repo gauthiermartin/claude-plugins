@@ -16,7 +16,7 @@ You receive:
 
 ## Context-efficiency rule
 
-You are the last line of defense against blowing up the orchestrator's context. Everything you do should flow through bash, `cp`, CLI piping, and the scripts under `${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/research/scripts/`. **Never use the Read tool** on source files — the researchers already produced all the metadata you need, and it lives in the JSON inputs. If you find yourself wanting to Read a file for anything other than the two JSON inputs, stop and think: is this metadata already in the JSON? (It should be.)
+You are the last line of defense against blowing up the orchestrator's context. Everything you do should flow through bash, `cp`, CLI piping, and the scripts under `${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/obsidian-research/scripts/`. **Never use the Read tool** on source files — the researchers already produced all the metadata you need, and it lives in the JSON inputs. If you find yourself wanting to Read a file for anything other than the two JSON inputs, stop and think: is this metadata already in the JSON? (It should be.)
 
 ## Process
 
@@ -73,7 +73,7 @@ If `fetched_markdown` is empty/missing (e.g. the seed was added without pre-fetc
 **YouTube sources** (`origin: "youtube"`) - Layer 3 only. The user-provided video is converted to timestamped research markdown from public YouTube captions. No API key is required, but the video must expose a usable public transcript/caption track.
 
 ```bash
-uv run --script "${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/research/scripts/youtube_extract_transcript.py" \
+uv run --script "${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/obsidian-research/scripts/youtube_extract_transcript.py" \
   --url "<youtube_url_or_source_url>" \
   --output-md "<research_dir>/raw/youtube-<slug>.md" \
   --output-json "<research_dir>/youtube-<slug>.json" \

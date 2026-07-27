@@ -1,6 +1,6 @@
 ---
-name: research-render
-description: Generate a multi-form answer (Marp slide deck, matplotlib chart, Obsidian Canvas, or social content brief) from one or more wiki pages in a research directory produced by /obsidian-skills:research, and file the output back into wiki/renders/. Outputs compound — they appear in index.yaml/index.md and can be re-rendered idempotently. One run can render several forms at once. Use when the user wants to "make a slide deck on X", "chart the comparison of A vs B", "build a canvas of how these concepts connect", "render this as Marp", or "extract a post idea / content brief from my research". Trigger on phrasings like "render", "slide deck", "chart", "canvas", "marp", "brief", "post idea", "extract ideas for social".
+name: obsidian-research-render
+description: Generate a multi-form answer (Marp slide deck, matplotlib chart, Obsidian Canvas, or social content brief) from one or more wiki pages in a research directory produced by /obsidian-skills:obsidian-research, and file the output back into wiki/renders/. Outputs compound — they appear in index.yaml/index.md and can be re-rendered idempotently. One run can render several forms at once. Use when the user wants to "make a slide deck on X", "chart the comparison of A vs B", "build a canvas of how these concepts connect", "render this as Marp", or "extract a post idea / content brief from my research". Trigger on phrasings like "render", "slide deck", "chart", "canvas", "marp", "brief", "post idea", "extract ideas for social".
 ---
 
 # Research Render
@@ -22,7 +22,7 @@ Four formats are supported:
 
 A run can produce **several formats at once** — the user picks one or many up front (Step 1), and each chosen format is rendered independently.
 
-A fifth notional format ("table") was considered but rejected: tables are best embedded inside `comparison` wiki pages, which `/obsidian-skills:research` already produces via its `comparison_writer`. If you want a table, ask for a comparison.
+A fifth notional format ("table") was considered but rejected: tables are best embedded inside `comparison` wiki pages, which `/obsidian-skills:obsidian-research` already produces via its `comparison_writer`. If you want a table, ask for a comparison.
 
 ## Step 1 — Gather inputs and pick the format(s)
 
@@ -34,7 +34,7 @@ You need:
 - **prompt** — the user's framing (e.g., "compare BM25 and hybrid retrieval as a 5-slide deck for an internal tech-talk audience"). Verbatim into each render's frontmatter so future agents can reproduce. For a `brief`, the prompt also carries **the body structure the user wants** (the sections to cover) — the brief writer follows it for the body (see Format details → Brief).
 - **platform** *(brief only, optional)* — LinkedIn / Substack note / X thread / Reddit / generic. Infer from the prompt; default to a platform-agnostic brief. Do not interrupt with a separate question — keep the brief lightly platform-aware and leave true platform-final copy to the user.
 
-Locate `research_dir` the same way `/obsidian-skills:research` (query mode) and `/research-lint` do.
+Locate `research_dir` the same way `/obsidian-skills:obsidian-research` (query mode) and `/obsidian-research-lint` do.
 
 Steps 2–4 run **once per selected format**. When several formats are chosen, run the idempotency checks per format and spawn the format writers **in parallel** (Step 4).
 
@@ -98,7 +98,7 @@ For `brief` only — **handle the `needs_guidance` return.** The brief writer is
 Renders compound. After all selected formats are written, regenerate `index.md` once so the new renders appear in the navigation:
 
 ```bash
-uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/research/scripts/build_index_md.py --research-dir "<research_dir>"
+uv run --script ${CLAUDE_PLUGIN_ROOT:-$HOME/.claude}/skills/obsidian-research/scripts/build_index_md.py --research-dir "<research_dir>"
 ```
 
 `index.yaml` does not need to be rebuilt — renders aren't sources, they don't have entries in the `sources:` array. The `total_wiki_pages` count is computed live by `build_index_md.py` from the wiki tree.

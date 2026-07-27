@@ -1,0 +1,19 @@
+{
+  "name": "github-skills",
+  "version": "1.0.0",
+  "description": "GitHub repository administration — create repos, audit/reconcile branch rulesets, and report bugs or vulnerabilities upstream",
+  "author": {
+    "name": "Martin Gauthier",
+    "email": "gauthiermartin86@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "github",
+    "rulesets",
+    "branch-protection",
+    "repo-admin",
+    "issues",
+    "bug-report",
+    "vulnerability-disclosure"
+  ]
+}

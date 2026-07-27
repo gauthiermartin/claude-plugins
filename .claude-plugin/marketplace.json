@@ -1,18 +1,40 @@
 {
-  "name": "claude-essentials",
+  "name": "claude-code-plugin-bundle",
   "owner": {
     "name": "Martin Gauthier",
     "url": "https://github.com/gauthiermartin"
   },
   "description": "Martin's curated Claude Code plugin bundle.",
   "allowCrossMarketplaceDependenciesOn": [
-    "mattpocock"
+    "claude-plugins-official",
+    "mattpocock",
+    "ponytail"
   ],
   "plugins": [
     {
       "name": "essentials",
       "source": "./plugins/essentials",
       "description": "Martin's essential Claude Code plugins."
+    },
+    {
+      "name": "git-skills",
+      "source": "./plugins/git-skills",
+      "description": "Git workflow skills — land commits on semantic branches with Conventional Commit messages"
+    },
+    {
+      "name": "github-skills",
+      "source": "./plugins/github-skills",
+      "description": "GitHub repository administration — create repos, audit/reconcile branch rulesets, and report bugs or vulnerabilities upstream"
+    },
+    {
+      "name": "obsidian-skills",
+      "source": "./plugins/obsidian-skills",
+      "description": "Skills for managing my Obsidian second brain — vault CLI and a persistent research wiki"
+    },
+    {
+      "name": "youtube-skills",
+      "source": "./plugins/youtube-skills",
+      "description": "YouTube utilities — pull transcripts to markdown and summarize them"
     }
   ]
 }

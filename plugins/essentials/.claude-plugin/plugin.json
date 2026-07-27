@@ -1,13 +1,34 @@
 {
   "name": "essentials",
+  "version": "1.0.0",
   "description": "Martin's essential Claude Code plugin bundle.",
   "author": {
     "name": "Martin Gauthier"
   },
   "dependencies": [
     {
+      "name": "git-skills"
+    },
+    {
+      "name": "github-skills"
+    },
+    {
       "name": "mattpocock-skills",
       "marketplace": "mattpocock"
+    },
+    {
+      "name": "obsidian-skills"
+    },
+    {
+      "name": "playwright",
+      "marketplace": "claude-plugins-official"
+    },
+    {
+      "name": "ponytail",
+      "marketplace": "ponytail"
+    },
+    {
+      "name": "youtube-skills"
     }
   ]
 }

@@ -1,0 +1,15 @@
+{
+  "name": "youtube-skills",
+  "version": "1.0.1",
+  "description": "YouTube utilities — pull transcripts to markdown and summarize them",
+  "author": {
+    "name": "Martin Gauthier",
+    "email": "gauthiermartin86@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "youtube",
+    "transcript",
+    "summarize"
+  ]
+}

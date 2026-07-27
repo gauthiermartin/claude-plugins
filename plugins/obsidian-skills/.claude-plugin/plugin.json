@@ -1,6 +1,6 @@
 {
   "name": "obsidian-skills",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Skills for managing my Obsidian second brain — vault CLI and a persistent research wiki (build, query, lint, distill, render)",
   "author": {
     "name": "Martin Gauthier",

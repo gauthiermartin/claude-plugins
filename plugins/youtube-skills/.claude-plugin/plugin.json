@@ -1,6 +1,6 @@
 {
   "name": "youtube-skills",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "YouTube utilities — pull transcripts to markdown and summarize them",
   "author": {
     "name": "Martin Gauthier",
